@@ -75,3 +75,4 @@ int buscasequencial(int vetor[],int n) {
 }
 
 int buscabinaria(int vetor[],int n);
+void bubblesort(int vetor[]);
