@@ -1,26 +1,19 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
-#define FALHA 0
-#define SUCESSO 1
 #define tam_max 100000
 
-void gerarvetor(int vetor[]);
+void gerarvetor(int vetor[],int tamanho);
 int buscasequencial(int vetor[],int n);
 int buscabinaria(int vetor[],int n);
+void bubblesort(int vetor[]);
 
 
 int main() {
     int vetor1[tam_max],vetor2[tam_max],vetor3[tam_max],vetor4[tam_max],vetor5[tam_max],vetor6[tam_max],vetor7[tam_max],vetor8[tam_max],vetor9[tam_max],vetor10[tam_max];
-    int buscados[tam_max],i;
-    gerarvetor(buscados);gerarvetor(vetor1);gerarvetor(vetor2);gerarvetor(vetor3);gerarvetor(vetor4);gerarvetor(vetor5);gerarvetor(vetor6);gerarvetor(vetor7);gerarvetor(vetor8);gerarvetor(vetor9);gerarvetor(vetor10);
-  /*   buscados[10] = 10;
-    buscados[500] = 2;
-    vetor1[2] = 10;
-    vetor1[300] = 2; */
+    int buscados[10000],i;
+    gerarvetor(buscados,10000);gerarvetor(vetor1,tam_max);gerarvetor(vetor2,tam_max);gerarvetor(vetor3,tam_max);gerarvetor(vetor4,tam_max);gerarvetor(vetor5,tam_max);gerarvetor(vetor6,tam_max);gerarvetor(vetor7,tam_max);gerarvetor(vetor8,tam_max);gerarvetor(vetor9,tam_max);gerarvetor(vetor10,tam_max);
 
-
-   std:: cout << sizeof(vetor1)/sizeof(int) << "\n";
 
     for(i = 0;i<tam_max;i++) {
         if(buscados[i] >= 0 && buscados[i] < 1000) {
@@ -67,9 +60,9 @@ int main() {
     return 1;
 }
 
-void gerarvetor(int vetor[]){
+void gerarvetor(int vetor[],int tamanho){
     srand(time(NULL));
-    for(int i = 0;i < tam_max;i++){
+    for(int i = 0;i < tamanho;i++){
         vetor[i] =  rand();
     }
 }
