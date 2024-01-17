@@ -4,72 +4,76 @@
 #define tam_max 200000
 
 void gerarvetor(int vetor[],int tamanho);
-int buscasequencial(int vetor[],int n,int tamanho);
+int buscabinaria(int vetor[],int tamanho,int n);
+void bubblesort(int vetor[],int tamanho);
+void swap(int &x,int &y);
 
 int main() {
     srand(time(NULL));
     int vetor1[tam_max],vetor2[tam_max],vetor3[tam_max],vetor4[tam_max],vetor5[tam_max],vetor6[tam_max],vetor7[tam_max],vetor8[tam_max],vetor9[tam_max],vetor10[tam_max];
     int buscados[10000],i;
-    gerarvetor(buscados,10000);gerarvetor(vetor1,tam_max);gerarvetor(vetor2,tam_max);gerarvetor(vetor3,tam_max);gerarvetor(vetor4,tam_max);gerarvetor(vetor5,tam_max);gerarvetor(vetor6,tam_max);gerarvetor(vetor7,tam_max);gerarvetor(vetor8,tam_max);gerarvetor(vetor9,tam_max);gerarvetor(vetor10,tam_max);
     int count1 = 0,count2=0,count3=0,count4=0,count5=0,count6=0,count7=0,count8=0,count9=0,count10=0;
+    gerarvetor(buscados,10000);gerarvetor(vetor1,tam_max);gerarvetor(vetor2,tam_max);gerarvetor(vetor3,tam_max);gerarvetor(vetor4,tam_max);gerarvetor(vetor5,tam_max);gerarvetor(vetor6,tam_max);gerarvetor(vetor7,tam_max);gerarvetor(vetor8,tam_max);gerarvetor(vetor9,tam_max);gerarvetor(vetor10,tam_max);
+    bubblesort(vetor1,tam_max);bubblesort(vetor2,tam_max);bubblesort(vetor3,tam_max);bubblesort(vetor4,tam_max);bubblesort(vetor5,tam_max);bubblesort(vetor6,tam_max);bubblesort(vetor7,tam_max);bubblesort(vetor8,tam_max);bubblesort(vetor9,tam_max);bubblesort(vetor10,tam_max);
+        
 
     for(i = 0;i<10000;i++) {
         if(i >= 0 && i < 1000) {
-            if(buscasequencial(vetor1,buscados[i],tam_max)) {
+            if(buscabinaria(vetor1,tam_max,buscados[i])) {
                 count1 += 1;
             }
         }
 
          else if(i >= 1000 && i < 2000) {
-            if(buscasequencial(vetor2,buscados[i],tam_max)) {
+            if(buscabinaria(vetor2,tam_max,buscados[i])) {
                 count2 += 1;
             }
         }
 
         else if(i >= 2000 && i < 3000) {
-            if(buscasequencial(vetor3,buscados[i],tam_max)) {
+            if(buscabinaria(vetor3,tam_max,buscados[i])) {
             count3 += 1;
             }
         }
 
         else if(i >= 3000 && i < 4000) {
-            if(buscasequencial(vetor4,buscados[i],tam_max)) {
+            if(buscabinaria(vetor4,tam_max,buscados[i])) {
                 count4 += 1;
             }
         }
 
         else if(i >= 4000 && i < 5000) {
-            if(buscasequencial(vetor5,buscados[i],tam_max)) {
+            if(buscabinaria(vetor5,tam_max,buscados[i])) {
                 count5 += 1;
             }
         }
 
         else if(i >= 5000 && i < 6000) {
-            if(buscasequencial(vetor6,buscados[i],tam_max)) {
+            if(buscabinaria(vetor6,tam_max,buscados[i])) {
              count6 += 1;
             }
         }
 
         else if(i >= 6000 && i < 7000) {
-            if(buscasequencial(vetor7,buscados[i],tam_max)) {
+            if(buscabinaria(vetor7,tam_max,buscados[i])) {
                 count7 += 1;
             }
         }
 
         else if(i >= 7000 && i < 8000) {
-            if(buscasequencial(vetor8,buscados[i],tam_max)){
+            if(buscabinaria(vetor8,tam_max,buscados[i])){
                 count8 += 1;
             } 
         }
 
         else if(i >= 8000 && i < 9000) {
-            if(buscasequencial(vetor9,buscados[i],tam_max)){
+            if(buscabinaria(vetor9,tam_max,buscados[i])){
                 count9 += 1;
             } 
         }
 
         else if(i >= 9000 && i < 10000) {
-            if(buscasequencial(vetor10,buscados[i],tam_max)){
+            if(buscabinaria(vetor10,tam_max,buscados[i])){
                 count10 += 1;
             } 
         }
@@ -94,17 +98,39 @@ void gerarvetor(int vetor[],int tamanho){
     }
 }
 
-int buscasequencial(int vetor[],int n,int tamanho) {
-    for (int i = 0;i < tamanho;++i) {
-        if (vetor[i] == n){
-        std::cout <<"numero encontrado " << vetor[i] <<" = " << n << "\n";
-        return 1;
+ int buscabinaria(int vetor[],int tamanho,int n) {
+    int inicio = 0;
+    int fim = tamanho-1;
+    int centro;
+    do {
+            centro = (inicio + fim)/2;
+        if(vetor[centro] > n) {
+            fim = centro - 1;
         }
-    }
+        else if (vetor[centro] < n){
+            inicio = centro + 1;
+        }
+        else return 1;
+    }while  (inicio<=fim);
     return 0;
 }
 
+void bubblesort(int vetor[],int tamanho){
+for (int k = 0;k < tamanho - 1;k++) {
+    for (int i = 0; i < tamanho - 1 ; i++){
+        if(vetor[i] > vetor[i+1]){
+            swap(vetor[i],vetor[i+1]);
+        }
+    }
+}
+}
 
-//10 vetores de 200000 elementos aleatorios
-//1000 elementos cada vetor
-//Busca sequencial = 1.2 s
+void swap(int &x,int &y){
+    int temp = x;
+    x = y;
+    y = temp;
+}
+
+//10 vetores de 10000 elementos\n aleatorios
+//1000 elementos\n cada vetor
+//Bubble sort + busca binaria = 3:54 min
