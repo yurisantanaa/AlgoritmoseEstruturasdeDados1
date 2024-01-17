@@ -5,8 +5,9 @@
 
 void gerarvetor(int vetor[],int tamanho);
 int buscabinaria(int vetor[],int tamanho,int n);
-void bubblesort(int vetor[],int tamanho);
+void quickSort(int vetor[], int comeco, int fim);
 void swap(int &x,int &y);
+int partition(int vetor[], int comeco, int fim);
 
 int main() {
     srand(time(NULL));
@@ -14,7 +15,7 @@ int main() {
     int buscados[10000],i;
     int count1 = 0,count2=0,count3=0,count4=0,count5=0,count6=0,count7=0,count8=0,count9=0,count10=0;
     gerarvetor(buscados,10000);gerarvetor(vetor1,tam_max);gerarvetor(vetor2,tam_max);gerarvetor(vetor3,tam_max);gerarvetor(vetor4,tam_max);gerarvetor(vetor5,tam_max);gerarvetor(vetor6,tam_max);gerarvetor(vetor7,tam_max);gerarvetor(vetor8,tam_max);gerarvetor(vetor9,tam_max);gerarvetor(vetor10,tam_max);
-    bubblesort(vetor1,tam_max);bubblesort(vetor2,tam_max);bubblesort(vetor3,tam_max);bubblesort(vetor4,tam_max);bubblesort(vetor5,tam_max);bubblesort(vetor6,tam_max);bubblesort(vetor7,tam_max);bubblesort(vetor8,tam_max);bubblesort(vetor9,tam_max);bubblesort(vetor10,tam_max);
+    quickSort(vetor1,0,tam_max);quickSort(vetor2,0,tam_max);quickSort(vetor3,0,tam_max);quickSort(vetor4,0,tam_max);quickSort(vetor5,0,tam_max);quickSort(vetor6,0,tam_max);quickSort(vetor7,0,tam_max);quickSort(vetor8,0,tam_max);quickSort(vetor9,0,tam_max);quickSort(vetor10,0,tam_max);
         
 
     for(i = 0;i<10000;i++) {
@@ -110,19 +111,12 @@ void gerarvetor(int vetor[],int tamanho){
         else if (vetor[centro] < n){
             inicio = centro + 1;
         }
-        else return 1;
+        else {
+            std::cout <<"numero encontrado " << vetor[centro] <<" = " << n << "\n";
+            return 1;
+        }
     }while  (inicio<=fim);
     return 0;
-}
-
-void bubblesort(int vetor[],int tamanho){
-for (int k = 0;k < tamanho - 1;k++) {
-    for (int i = 0; i < tamanho - 1 ; i++){
-        if(vetor[i] > vetor[i+1]){
-            swap(vetor[i],vetor[i+1]);
-        }
-    }
-}
 }
 
 void swap(int &x,int &y){
@@ -131,6 +125,48 @@ void swap(int &x,int &y){
     y = temp;
 }
 
-//10 vetores de 10000 elementos\n aleatorios
-//1000 elementos\n cada vetor
-//Bubble sort + busca binaria = 3:54 min
+ 
+void quickSort(int vetor[], int comeco, int fim)
+{
+    if (comeco >= fim)
+        return;
+    int p = partition(vetor, comeco, fim);
+    quickSort(vetor, comeco, p - 1);
+    quickSort(vetor, p + 1, fim);
+}
+
+int partition(int vetor[], int comeco, int fim){
+    int pivot = vetor[comeco];
+    int count = 0;
+    for (int i = comeco + 1; i <= fim; i++) {
+        if (vetor[i] <= pivot)
+            count++;
+    }
+
+    int indexpivot = comeco + count;
+    swap(vetor[indexpivot], vetor[comeco]);
+    int i = comeco, j = fim;
+    while (i < indexpivot && j > indexpivot) {
+        while (vetor[i] <= pivot) {
+            i++;
+        }
+ 
+        while (vetor[j] > pivot) {
+            j--;
+        }
+ 
+        if (i < indexpivot && j > indexpivot) {
+            swap(vetor[i++], vetor[j--]);
+        }
+    }
+    return indexpivot;
+}
+
+
+//10 vetores de 200000 elementos aleatorios
+//1000 elementos cada vetor de busca
+//Bubble sort + busca binaria = muito
+
+//10 vetores de 200000 elementos aleatorios
+//1000 elementos cada vetor de busca
+//Quicksort + busca binaria = 0.35
