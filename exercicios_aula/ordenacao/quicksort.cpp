@@ -1,14 +1,16 @@
 #include <iostream>
 
+int particao(int vetor[],int inicio,int fim);
 void quicksort(int vetor[], int inicio,int fim);
 void gerarvetor(int vetor[],int tamanho);
 void mostrarvetor(int vetor[],int tamanho);
+void swap(int &x,int &y);
 
 int main() {
     srand(time(NULL));
-    int tamanho = 100;
+    int tamanho = 10;
     int inicio = 0;
-    int fim = tamanho -1;
+    int fim = tamanho -1 ;
     int vetor[tamanho];
     gerarvetor(vetor,tamanho);
     mostrarvetor(vetor,tamanho);
@@ -19,19 +21,25 @@ int main() {
 
 
 void quicksort(int vetor[],int inicio,int fim){
-int pivotindex = (inicio + fim)/2;
-    for (int i = 0;i <= fim;i++){
-        if (vetor[i] <= vetor[pivotindex]) {
+    int p;
+    if (inicio < fim) {
+        p = particao(vetor,inicio,fim);
+        quicksort(vetor,p+1,fim);
+        quicksort(vetor,inicio,p-1);
+    }
+}
 
-        }
-        else{
-
-
+int particao(int vetor[],int inicio,int fim){
+    int pivotindex = fim;
+    int pos = inicio;
+    for (int i = inicio;i < fim;i++) {
+        if(vetor[pivotindex] >= vetor[i]) {
+            swap(vetor[i],vetor[pos]);
+            pos++;
         }
     }
-
-
-quicksort();
+    swap(vetor[pos],vetor[pivotindex]);
+    return pos;
 }
 
 
@@ -48,4 +56,11 @@ void mostrarvetor(int vetor[],int tamanho) {
         if (i<tamanho-1) std::cout << ',';
     }
     std :: cout << "]\n\n\n";
+}
+
+void swap(int &x,int &y) {
+    int temp;
+    temp = x;
+    x = y;
+    y = temp;
 }
