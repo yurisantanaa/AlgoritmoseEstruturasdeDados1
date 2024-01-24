@@ -1,18 +1,26 @@
-/* #ifndef __EX01_HPP__
+#ifndef __EX01_HPP__
 #define __EX01_HPP__
 
-struct _conjunto{
+
+struct _node{
     int Num;
-    _conjunto *prox;
+    _node *prox;
 };
-typedef struct _conjunto conjunto; 
+typedef struct _node node; 
 
 
-conjunto* criaConjunto(void); //
+struct _conjunto{
+    node *head;
+    int size;
+};
+typedef struct _conjunto conjunto;
+
+
+int criaConjunto(conjunto * c); //
 int conjuntoVazio(conjunto * c);  //
-conjunto* insereElementoConjunto(unsigned int x,conjunto * c); //
-conjunto* excluiDoConjunto(unsigned int x,conjunto * c); //
-void tamanhoConjunto(conjunto * c); //
+int insereElementoConjunto(unsigned int x,conjunto * c); //
+int tamanhoConjunto(conjunto * c); //
+int excluiDoConjunto(unsigned int x,conjunto * c); //
 int maiores(unsigned int x,conjunto * c);//
 int menores(unsigned int x,conjunto * c);//
 int pertenceConjunto(unsigned int x,conjunto * c); //
@@ -28,4 +36,3 @@ void destruirConjunto(conjunto * c);//
 void ordena(conjunto * c, int ordem);
 
 #endif
- */

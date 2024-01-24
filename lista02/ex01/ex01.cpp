@@ -1,88 +1,102 @@
-/* #include <iostream>
+#include <iostream>
 #include "ex01.hpp"
 
 
-conjunto* criaConjunto(void){
-    conjunto *c = NULL;
-    c = (conjunto*) malloc(sizeof(conjunto));
-    c ->prox = NULL;
-    
-    return c;
-}
-
-int conjuntoVazio(conjunto * c){
-    if (c -> prox == NULL) {
+int criaConjunto(conjunto * c){;
+    if (c) {
+        c->head = NULL;
+        c->size = 0;
+        std::cout << "conjunto criado com sucesso!\n";;
         return 1;
-    } else {
+    }
+    else {
+        std::cout << "erro ao criar conjunto!\n";
         return 0;
     }
 }
 
-conjunto* insereElementoConjunto(unsigned int x,conjunto * c){
-    conjunto* novo = (conjunto*)malloc(sizeof(conjunto));
-        novo -> prox = c;
+int conjuntoVazio(conjunto * c){
+    if (c -> head == NULL) {
+        std ::cout << "conjunto vazio\n";
+        return 1;
+    } else {
+        std::cout << "conjunto nao vazio\n";
+        return 0;
+    }
+}
+
+ int insereElementoConjunto(unsigned int x,conjunto * c){
+    node* novo = (node*)malloc(sizeof(node));
+        if (novo){
         novo -> Num = x;
-        return novo;
-    
+        novo -> prox = c ->head;
+        c -> head = novo;
+        c -> size += 1;
+        return 1;
+        }
+        return 0;
 }
-
-conjunto* excluiDoConjunto(unsigned int x,conjunto * c){
-    conjunto* anterior = NULL;
-    conjunto* p = c;
-
-    while (p != NULL && p->Num != x) {
-        anterior = p;
-        p = p->prox;
-    }
-    if (p == NULL) return c;
-    if (anterior) {
-        c = p->prox;
-    }
-    else {
-        anterior->prox = p->prox;
-    }
-    free(p);
-    return c;
-}
-
-//void tamanhoConjunto(conjunto * c){}
 
 void mostraConjunto(conjunto * c, int ordem){
-    conjunto *p = c;
+    node *aux = c ->head;
     //ordena(p,ordem);
     std ::cout << '(';
-    while(p -> prox) {
+    while(aux ->prox) {
        // std:: cout << "teste";
-        std ::cout << p->Num;
-        p = p->prox;
-        if(p->prox) std ::cout << ',';
+        std ::cout << aux-> Num;
+        aux  = aux  -> prox;
+        if(aux -> prox) std ::cout << ',';
     }
     std ::cout << ")\n";
-    free(p);
 }
 
+int tamanhoConjunto(conjunto * c){
+    std::cout << c->size << "\n";
+    return c ->size;
+}
+
+
+int excluiDoConjunto(unsigned int x,conjunto * c){
+    node* anterior = NULL;
+    node* aux = c ->head;
+
+    while (aux->prox != NULL && aux->Num != x) {
+        anterior = aux;
+        aux= aux->prox;
+    } 
+    if (aux->prox == NULL) return 0;
+     if (anterior) {
+        anterior->prox = aux ->prox;
+    }
+    else {
+        c->head = aux->prox;
+    }
+    return 1; 
+}
+
+
+
 int pertenceConjunto(unsigned int x,conjunto * c){
-    conjunto *p = c;
-    while(p){
-        if(p->Num == x){
-            free(p);
+    node *aux = c ->head;
+    while(aux ->prox){
+        if(aux->Num == x){
+            std::cout << aux->Num << " pertence ao conjunto\n";
             return 1;
         }
-        p = p->prox;
+        aux = aux->prox;
     }
-    free(p);
+    std::cout << x << " nao pertence ao conjunto\n";
     return 0;
 }
 
 void destruirConjunto(conjunto * c) {
-    conjunto *p = c;
-    while (p) {
-        conjunto* proximo = p->prox;
-        free(p);
-        p = proximo;
+    while (c->head->prox) {
+        node * temp = c->head;
+        c->head = c->head->prox;
+        delete temp;
     }
 }
-
+/*
 int maiores(unsigned int x,conjunto * c){
     conjunto *p = c;
     int count = 0;
