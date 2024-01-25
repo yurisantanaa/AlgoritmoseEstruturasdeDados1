@@ -52,13 +52,119 @@ void imprimeData(data *d){
 }
 
 
-data * somaDiasData(data d,unsigned int dias);
-data * subtrairDiasData(data d,unsigned int dias);
-unsigned int obtemDiaData(data d);
-unsigned int obtemMesData(data d);
-unsigned int obtemAnoData(data d);
-unsigned int bissextoData(data d);
-int comparaData(data d1,data d2);
+data * somaDiasData(data d,unsigned int dias){
+        data *n = new data(d);
+        while(dias > 0){
+                n->dia +=1;
+                if ((n->mes == 1||n->mes == 3||n->mes == 5||n->mes == 7||n->mes == 8||n->mes == 10||n->mes == 12) && n->dia > 31){
+                        n->mes+=1;
+                        n->dia=1;        
+                }
+                else if ((n->mes == 4||n->mes == 6||n->mes == 9||n->mes == 11) && n->dia > 30){
+                        n->mes +=1;
+                        n->dia =1;
+                }
+                else if ((n->mes ==2 && anoBissexto(n->ano)) && n->dia > 29){
+                        n->mes +=1;
+                        n->dia =1;
+                }
+                else if ((n->mes ==2 && !anoBissexto(n->ano)) && n->dia > 28) {
+                        n->mes +=1;
+                        n->dia =1;
+                }
+                if(n->mes > 12) {
+                        n->ano++;
+                        n->mes=1;
+                }
+                dias--;
+        } 
+        if(validadata(n->dia,n->mes,n->ano)) {
+                return n;
+        }
+        std::cout << "Erro\n";
+        return NULL;
+}
+
+
+
+data * subtrairDiasData(data d,unsigned int dias){
+        data *n = new data(d);
+        while(dias > 0){
+                n->dia -=1;
+                if ((n->mes == 1||n->mes == 3||n->mes == 5||n->mes == 7||n->mes == 8||n->mes == 10||n->mes == 12) && n->dia < 1) 
+                {
+                        n->mes-=1;
+                        n->dia =31;
+                }
+                else if ((n->mes == 4||n->mes == 6||n->mes == 9||n->mes == 11) && n->dia < 1)
+                {
+                        n->mes -=1;
+                        n->dia = 30;
+                }
+                else if ((n->mes ==2 && anoBissexto(n->ano)) && n->dia < 1) {
+                        n->mes -=1;
+                        n->dia =29;
+                }
+                else if ((n->mes ==2 && !anoBissexto(n->ano)) && n->dia < 1) {
+                        n->mes -=1;
+                        n->dia =28;
+                }
+                if(n->mes < 1){
+                        n->mes = 12;
+                        n->ano--;
+                }
+                dias--;
+        } 
+        if(validadata(n->dia,n->mes,n->ano)) {
+                return n;
+        }
+        std::cout << "Erro\n";
+        imprimeData(n);
+        return NULL;
+}
+
+
+
+unsigned int obtemDiaData(data d){
+        data *n = new data(d);
+        std::cout <<  " dia" << n->dia << "\n";
+        return n->dia;
+}
+
+
+
+unsigned int obtemMesData(data d){
+        data *n = new data(d);
+        std::cout <<  " mes" << n->mes << "\n";
+        return n->mes;
+}
+
+unsigned int obtemAnoData(data d){
+        data *n = new data(d);
+        std::cout <<  " ano" << n->ano << "\n";
+        return n->ano;
+}
+
+int comparaData(data d1,data d2){
+        data *n1 = new data(d1);
+        data *n2 = new data(d2);
+        if (n1->ano != n2->ano) {
+                if (n1->ano>n2->ano) return 1;
+                else return -1;
+        }
+
+        if (n1->mes != n2->mes) {
+                if (n1->mes>n2->mes) return 1;
+                else return -1;
+        }
+
+        if(n1->dia != n2->dia) {
+                if (n1->dia>n2->dia) return 1;
+                else return -1;
+        }
+        return 0;
+}
+
 unsigned int numeroDiasDatas(data d1,data d2);
 unsigned int numeroMesesDatas(data d1,data d2);
 unsigned int numeroAnosDatas(data d1,data d2);
